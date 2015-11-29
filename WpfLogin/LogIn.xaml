@@ -1,0 +1,63 @@
+﻿<Window x:Class="WpfLogin.LogIn"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Name="LogInWindow"
+        xmlns:local="clr-namespace:WpfLogin.ViewModel"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStyle="None"
+        ShowInTaskbar="False"
+        SizeToContent="WidthAndHeight"
+        FocusManager.FocusedElement="{Binding ElementName=tbUserName}"
+        Title="LogIn" ResizeMode="NoResize" >
+    <Window.Resources>
+        <LinearGradientBrush StartPoint="0.5,0.5"
+                        EndPoint="0.5,1"
+                        x:Key="backBrush">
+            <GradientStop Color="DarkGray"
+                  Offset="0" />
+            <GradientStop Color="Gray"
+                  Offset="1" />
+        </LinearGradientBrush>
+        <DropShadowEffect x:Key="shadowWindow"
+                    Color="Black"
+                    Opacity=".75"
+                    ShadowDepth="12" />
+        <DropShadowEffect x:Key="shadowButton"
+                    Color="GhostWhite"
+                    Opacity=".50"
+                    ShadowDepth="1" />
+    </Window.Resources>
+    <Window.DataContext>
+        <local:UserViewModel />
+    </Window.DataContext>
+    <Border CornerRadius="10"
+        BorderBrush="#FF5F5F5F"
+        BorderThickness="4"
+        Background="{StaticResource backBrush}"
+        Effect="{StaticResource shadowWindow}"
+        Margin="24"
+        Padding="24">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Label Margin="5,5,0,5" Width="70">User name</Label>
+                <TextBox Margin="5,5,5,5" HorizontalAlignment="Left" Height="23" Width="120" Name="tbUserName" Text="{Binding Path=UserName, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Margin="5,5,0,5" Width="70">Password</Label>
+                <PasswordBox Margin="5,5,5,5" HorizontalAlignment="Left" Height="23" Width="120" Name="pswdbx" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                    <Button Margin="5" Content="Log In" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Effect="{StaticResource shadowWindow}"
+                        Command="{Binding LogIn, Mode=OneWay}" CommandParameter="{Binding ElementName=pswdbx}" />
+                    <Button Margin="5" Content="Add new user" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Effect="{StaticResource shadowWindow}"
+                        Command="{Binding AddUser, Mode=OneWay}" CommandParameter="{Binding ElementName=pswdbx}" />
+                    <Button Margin="5" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Effect="{StaticResource shadowWindow}"
+                        Command="{Binding CloseWindowCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=LogInWindow}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+    </Border>
+</Window>
